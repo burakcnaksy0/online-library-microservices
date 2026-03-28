@@ -2,6 +2,7 @@ package com.burakcan.aksoy.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,16 +26,18 @@ public class LibraryController {
 	private final LibraryService libraryService;
 	private final Environment environment;
 
+
+
 	public LibraryController(LibraryService libraryService, Environment environment) {
 		this.libraryService = libraryService;
         this.environment = environment;
     }
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<LibraryResponse> getLibraryById(@PathVariable String id){
 		return ResponseEntity.ok(libraryService.getAllBooksInLibraryById(id));
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<LibraryResponse> createLibrary(){
 		logger.info("Library created on port number "+ environment.getProperty("local.server.port"));
@@ -51,4 +54,5 @@ public class LibraryController {
 	public ResponseEntity<List<String>> getAllLibraries(){
 		return ResponseEntity.ok(libraryService.getAllLibraries());
 	}
+
 }
